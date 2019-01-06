@@ -31,9 +31,9 @@ public class OrdersConsumer {
         Integer id = data.getInt("id");
         String status = data.getString("status");
 
-        log.info("Status for order " + id + " set to " + status);
+      //  log.info("Status for order " + id + " set to " + status);
 
-        ordersBean.setOrderStatus(id, status);
+
 
     }
 
