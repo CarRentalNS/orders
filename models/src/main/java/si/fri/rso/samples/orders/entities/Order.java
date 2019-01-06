@@ -9,7 +9,9 @@ import java.util.List;
         {
                 @NamedQuery(name = "Order.getAll", query = "SELECT o FROM orders o"),
                 @NamedQuery(name = "Order.findByCustomer", query = "SELECT o FROM orders o WHERE o.customerId = " +
-                        ":customerId")
+                        ":customerId"),
+                @NamedQuery(name = "Order.findByCar", query = "SELECT o FROM orders o WHERE o.carId = " +
+                        ":carId")
         })
 public class Order {
 
@@ -17,15 +19,15 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String title;
+    private Integer id1;
+    private Instant time_from;
 
-    private String description;
+    private Instant time_to;
 
-    private Instant submitted;
+    private String pickup_location;
 
-    private String status;
+    private String drop_location;
 
-    private Instant completed;
 
     @Column(name = "customer_id")
     private String customerId;
@@ -41,20 +43,18 @@ public class Order {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    @Column(name = "car_id")
+    private String carId;
+
+    @ElementCollection
+    private List<String> carIds;
+
+    public Integer getCarId() {
+        return id1;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+    public void setCarId(Integer id1) {
+        this.id1 = id1;
     }
 
     public String getCustomerId() {
@@ -65,35 +65,51 @@ public class Order {
         this.customerId = customerId;
     }
 
-    public Instant getSubmitted() {
-        return submitted;
+    public Instant getTimeFrom() {
+        return time_from;
     }
 
-    public void setSubmitted(Instant submitted) {
-        this.submitted = submitted;
+    public void setTimeFrom(Instant time_from) {
+        this.time_from = time_from;
     }
 
-    public String getStatus() {
-        return status;
+    public Instant getTimeTo() {
+        return time_to;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setTimeTo(Instant time_to) {
+        this.time_to = time_to;
     }
 
     public List<String> getItemIds() {
         return itemIds;
     }
 
+    public List<String> getCarIdsIds() {
+        return carIds;
+    }
+
     public void setItemIds(List<String> itemIds) {
         this.itemIds = itemIds;
     }
 
-    public Instant getCompleted() {
-        return completed;
+    public void setCarIds(List<String> carIds) {
+        this.carId = carId;
     }
 
-    public void setCompleted(Instant completed) {
-        this.completed = completed;
+    public void setPickup_location(String pickup_location) {
+        this.pickup_location = pickup_location;
+    }
+
+    public String getPickup_location() {
+        return pickup_location;
+    }
+
+    public void setDrop_location(String drop_location) {
+        this.drop_location = drop_location;
+    }
+
+    public String getDrop_location() {
+        return drop_location;
     }
 }

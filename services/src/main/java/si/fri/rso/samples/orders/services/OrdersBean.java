@@ -7,6 +7,7 @@ import si.fri.rso.samples.orders.entities.Order;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.UriInfo;
 import java.time.Instant;
@@ -28,6 +29,13 @@ public class OrdersBean {
                 .build();
 
         return JPAUtils.queryEntities(em, Order.class, queryParameters);
+
+    }
+    public List<Order> getOrders() {
+
+        TypedQuery<Order> query = em.createNamedQuery("Order.getAll", Order.class);
+
+        return query.getResultList();
 
     }
 
@@ -85,8 +93,9 @@ public class OrdersBean {
 
         try {
             beginTx();
-            order.setStatus("completed");
-            order.setCompleted(Instant.now());
+
+
+            order.setTimeTo(Instant.now());
             commitTx();
         } catch (Exception e) {
             rollbackTx();
@@ -113,24 +122,7 @@ public class OrdersBean {
         return true;
     }
 
-    public void setOrderStatus(Integer orderId, String status) {
 
-        Order order = em.find(Order.class, orderId);
-
-        if (order == null) {
-            throw new NotFoundException();
-        }
-
-        try {
-            beginTx();
-            order.setStatus(status);
-            em.merge(order);
-            commitTx();
-        } catch (Exception e) {
-            rollbackTx();
-        }
-
-    }
 
     private void beginTx() {
         if (!em.getTransaction().isActive())
