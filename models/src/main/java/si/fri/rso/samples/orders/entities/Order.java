@@ -20,6 +20,7 @@ public class Order {
     private Integer id;
 
     private Integer id1;
+
     private Instant time_from;
 
     private Instant time_to;
@@ -32,8 +33,11 @@ public class Order {
     @Column(name = "customer_id")
     private String customerId;
 
+    @Column(name = "car_id")
+    private String carId;
+
     @ElementCollection
-    private List<String> itemIds;
+    //private List<String> itemIds;
 
     public Integer getId() {
         return id;
@@ -43,18 +47,17 @@ public class Order {
         this.id = id;
     }
 
-    @Column(name = "car_id")
-    private String carId;
+
 
     @ElementCollection
-    private List<String> carIds;
+    //private List<String> carIds;
 
-    public Integer getCarId() {
-        return id1;
+    public String getCarId() {
+        return carId;
     }
 
     public void setCarId(Integer id1) {
-        this.id1 = id1;
+        this.carId = carId;
     }
 
     public String getCustomerId() {
@@ -81,7 +84,7 @@ public class Order {
         this.time_to = time_to;
     }
 
-    public List<String> getItemIds() {
+    /*public List<String> getItemIds() {
         return itemIds;
     }
 
@@ -95,7 +98,7 @@ public class Order {
 
     public void setCarIds(List<String> carIds) {
         this.carId = carId;
-    }
+    }*/
 
     public void setPickup_location(String pickup_location) {
         this.pickup_location = pickup_location;
