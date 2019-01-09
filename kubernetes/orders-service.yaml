@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: orders
 spec:
-  type: LoadBalancer
+  type: NodePort
   ports:
   - port: 8081
     protocol: TCP
