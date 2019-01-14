@@ -76,4 +76,3 @@ streaming:
       security-protocol: SASL_SSL
       sasl-mechanism: SCRAM-SHA-256
       sasl-jaas-config: 'org.apache.kafka.common.security.scram.ScramLoginModule required username="9pagnfwv" password="oPRRpUqZNySCwnWeSlrTngOdmnC07ZGA";'
-     // group-id: newer
