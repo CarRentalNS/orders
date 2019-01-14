@@ -28,10 +28,10 @@ kumuluzee:
         threshold: 100000000
   config:
     etcd:
-      hosts: http://192.168.99.100:2379
+      hosts: http://159.122.187.177:2379
   discovery:
     etcd:
-      hosts: http://192.168.99.100:2379
+      hosts: http://159.122.187.177:2379
   metrics:
     web-instrumentation:
     - name: orders-endpoint
@@ -76,4 +76,4 @@ streaming:
       security-protocol: SASL_SSL
       sasl-mechanism: SCRAM-SHA-256
       sasl-jaas-config: 'org.apache.kafka.common.security.scram.ScramLoginModule required username="9pagnfwv" password="oPRRpUqZNySCwnWeSlrTngOdmnC07ZGA";'
-      group-id: newer
+     // group-id: newer
