@@ -28,10 +28,10 @@ kumuluzee:
         threshold: 100000000
   config:
     etcd:
-      hosts: http://192.168.99.100:2379
+      hosts: http://159.122.187.177:2379
   discovery:
     etcd:
-      hosts: http://192.168.99.100:2379
+      hosts: http://159.122.187.177:2379
   metrics:
     web-instrumentation:
     - name: orders-endpoint
