@@ -1,7 +1,6 @@
 package si.fri.rso.samples.orders.services.producers;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Disposes;
 import javax.enterprise.inject.Produces;
 import javax.persistence.EntityManager;
@@ -10,7 +9,7 @@ import javax.persistence.PersistenceUnit;
 
 public class PersistenceProducer {
 
-    @PersistenceUnit(unitName = "orders-jpa")
+    @PersistenceUnit(unitName = "customers-jpa")
     private EntityManagerFactory emf;
 
     @Produces
