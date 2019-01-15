@@ -48,7 +48,10 @@ public class OrdersResource {
     @POST
     public Response createOrder(Order order) {
 
-       if (order.getCustomerId() == null || order.getCustomerId().isEmpty()) {
+       if ((order.getCustomerId() == null || order.getCustomerId().isEmpty())||(order.getCarId()==null || order.getCarId().isEmpty())||
+               (order.getPickup_location()==null || order.getPickup_location().isEmpty())||(order.getDrop_location()==null || order.getDrop_location().isEmpty())||
+        (order.getTimeFrom()==null) || (order.getTimeTo()==null))
+       {
             return Response.status(Response.Status.BAD_REQUEST).build();
         } else {
             order = ordersBean.createOrder(order);

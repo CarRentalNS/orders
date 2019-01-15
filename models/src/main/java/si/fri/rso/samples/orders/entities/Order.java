@@ -19,8 +19,6 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private Integer id1;
-
     private Instant time_from;
 
     private Instant time_to;
@@ -36,9 +34,6 @@ public class Order {
     @Column(name = "car_id")
     private String carId;
 
-    @ElementCollection
-    //private List<String> itemIds;
-
     public Integer getId() {
         return id;
     }
@@ -48,17 +43,10 @@ public class Order {
     }
 
 
-
-    @ElementCollection
-    //private List<String> carIds;
-
     public String getCarId() {
         return carId;
     }
 
-    public void setCarId(Integer id1) {
-        this.carId = carId;
-    }
 
     public String getCustomerId() {
         return customerId;
@@ -83,22 +71,6 @@ public class Order {
     public void setTimeTo(Instant time_to) {
         this.time_to = time_to;
     }
-
-    /*public List<String> getItemIds() {
-        return itemIds;
-    }
-
-    public List<String> getCarIdsIds() {
-        return carIds;
-    }
-
-    public void setItemIds(List<String> itemIds) {
-        this.itemIds = itemIds;
-    }
-
-    public void setCarIds(List<String> carIds) {
-        this.carId = carId;
-    }*/
 
     public void setPickup_location(String pickup_location) {
         this.pickup_location = pickup_location;
