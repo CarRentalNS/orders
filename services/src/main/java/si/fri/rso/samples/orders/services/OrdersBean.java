@@ -52,9 +52,9 @@ public class OrdersBean {
         // baseUrl = "http://159.122.187.177:31465"; // only for demonstration
     }
 
-    @Inject
+    /*@Inject
     @DiscoverService("feedback")
-    private Optional<String> baseUrl;
+    private Optional<String> baseUrl;*/
 
     @Inject
     private OrdersBean ordersBean;
@@ -89,8 +89,8 @@ public class OrdersBean {
             throw new NotFoundException();
         }
 
-        List<Feedback> feedbacks = ordersBean.getFeedbacks(orderId);
-        order.setFeedbacks(feedbacks);
+     //   List<Feedback> feedbacks = ordersBean.getFeedbacks(orderId);
+       // order.setFeedbacks(feedbacks);
         return order;
     }
 
@@ -187,54 +187,7 @@ public class OrdersBean {
     @CircuitBreaker(requestVolumeThreshold = 3)
     @Timeout(value = 2, unit = ChronoUnit.SECONDS)
     @Fallback(fallbackMethod = "getFeedbackFallback")
-    public List<Feedback> getFeedbacks(Integer orderId) {
 
-
-        if (appProperties.isExternalServicesEnabled() && baseUrl.isPresent()) {
-           /* try {
-                String json = getJSONResponse("GET", baseUrl.get());
-                ObjectMapper mapper = new ObjectMapper();
-
-                Order driverId = mapper.readValue(json, Order.class);
-
-                return httpClient
-                        .target(baseUrl.get() + "/v1/orders?where=customerId:EQ:" + customerId)
-                        .request().get(new GenericType<List<Order>>() {
-                        });
-            } catch (WebApplicationException | ProcessingException e) {
-                log.severe(e.getMessage());
-                throw new InternalServerErrorException(e);
-            }*/
-            try {
-                System.out.println(" URL is " + baseUrl.get());
-
-                String json = getJSONResponse("GET", baseUrl.get() + "/v1/feedback?where=orderId:EQ:" + orderId);
-                ObjectMapper objectMapper = new ObjectMapper();
-
-                List <Feedback> driverId = objectMapper.readValue(json,objectMapper.getTypeFactory().constructCollectionType(List.class, Feedback.class));
-                for(Feedback feedbacks: driverId){
-                    System.out.println("Feedback list:"+feedbacks.getOrderId());
-                    System.out.println("Feedback list:"+feedbacks.getSatisfactionGrade());
-                }
-                return driverId;
-
-            } catch (IOException e) {
-                System.out.println("Fail");
-                return new ArrayList<>();
-            }
-        }
-
-
-
-        return null;
-
-    }
-
-    public List<Feedback> getFeedbackFallback(Integer orderId) {
-
-        return Collections.emptyList();
-
-    }
     private static String getJSONResponse(String requestType, String fullUrl) {
         return getJSONResponse( requestType,  fullUrl, null);
     }
