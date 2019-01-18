@@ -12,19 +12,27 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
+import org.eclipse.microprofile.faulttolerance.CircuitBreaker;
+import org.eclipse.microprofile.faulttolerance.Fallback;
+import org.eclipse.microprofile.faulttolerance.Timeout;
+import org.eclipse.microprofile.metrics.annotation.Timed;
 import si.fri.rso.samples.orders.entities.Feedback;
 import si.fri.rso.samples.orders.entities.Order;
 import si.fri.rso.samples.orders.services.configuration.AppProperties;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.NotFoundException;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.UriInfo;
 import java.io.IOException;
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -36,6 +44,13 @@ public class OrdersBean {
 
     @Inject
     private AppProperties appProperties;
+
+    private Client httpClient;
+    @PostConstruct
+    private void init() {
+        httpClient = ClientBuilder.newClient();
+        // baseUrl = "http://159.122.187.177:31465"; // only for demonstration
+    }
 
     @Inject
     @DiscoverService("feedback")
@@ -167,6 +182,11 @@ public class OrdersBean {
         if (em.getTransaction().isActive())
             em.getTransaction().rollback();
     }
+
+    @Timed
+    @CircuitBreaker(requestVolumeThreshold = 3)
+    @Timeout(value = 2, unit = ChronoUnit.SECONDS)
+    @Fallback(fallbackMethod = "getFeedbackFallback")
     public List<Feedback> getFeedbacks(Integer orderId) {
 
 
@@ -193,7 +213,8 @@ public class OrdersBean {
 
                 List <Feedback> driverId = objectMapper.readValue(json,objectMapper.getTypeFactory().constructCollectionType(List.class, Feedback.class));
                 for(Feedback feedbacks: driverId){
-
+                    System.out.println("Feedback list:"+feedbacks.getOrderId());
+                    System.out.println("Feedback list:"+feedbacks.getSatisfactionGrade());
                 }
                 return driverId;
 

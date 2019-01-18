@@ -1,5 +1,6 @@
 package si.fri.rso.samples.orders.api.v1.resources;
 
+import com.kumuluz.ee.discovery.annotations.DiscoverService;
 import si.fri.rso.samples.orders.entities.Order;
 import si.fri.rso.samples.orders.services.OrdersBean;
 
@@ -11,6 +12,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.util.List;
+import java.util.Optional;
 
 @ApplicationScoped
 @Path("/orders")
@@ -23,6 +25,10 @@ public class OrdersResource {
 
     @Inject
     private OrdersBean ordersBean;
+
+    @Inject
+    @DiscoverService("feedback")
+    private Optional<String> baseUrl;
 
     @GET
     public Response getOrders() {
