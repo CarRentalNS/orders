@@ -98,7 +98,7 @@ public class OrdersResource {
 
     @DELETE
     @Path("{orderId}")
-    public Response deleteCustomer(@PathParam("orderId") String orderId) {
+    public Response deleteOrder(@PathParam("orderId") String orderId) {
 
         boolean deleted = ordersBean.deleteOrder(orderId);
 

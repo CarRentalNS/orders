@@ -1,5 +1,6 @@
 package si.fri.rso.samples.orders.entities;
 
+import si.fri.rso.samples.orders.entities.Feedback;
 import javax.persistence.*;
 import java.time.Instant;
 import java.util.List;
@@ -47,6 +48,10 @@ public class Order {
         return carId;
     }
 
+    public void setCarId(String carId) {
+        this.carId = carId;
+    }
+
 
     public String getCustomerId() {
         return customerId;
@@ -86,5 +91,14 @@ public class Order {
 
     public String getDrop_location() {
         return drop_location;
+    }
+
+    @Transient
+    private List<Feedback> feedbacks;
+
+    public List<Feedback> getFeedbacks() { return feedbacks;
+    }
+
+    public void setFeedbacks(List<Feedback> feedbacks) { this.feedbacks = feedbacks;
     }
 }
